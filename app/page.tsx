@@ -1,7 +1,20 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import { createClient } from '@supabase/supabase-js'
+import { Database } from "@/database.types";
 
-export default function Home() {
+export default async function Home() {
+  const url = process.env["NEXT_PUBLIC_SUPABASE_URL"] as string
+  const anonKey = process.env["NEXT_PUBLIC_SUPABASE_ANON_KEY"] as string
+  const supabase = createClient<Database>(url, anonKey)
+
+  let {data: users, error} = await supabase
+    .from('Users')
+    .select('*')
+
+  console.log("Users :", users)
+  console.log("error :", error)
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
