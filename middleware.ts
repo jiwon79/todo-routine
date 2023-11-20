@@ -1,14 +1,15 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
-  const supabase = createMiddlewareClient({req, res})
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res });
 
   const {
-    data: {user},
-  } = await supabase.auth.getUser()
+    data: { user },
+  } = await supabase.auth.getUser();
+  console.log('middleware', user);
 
   // if (user && req.nextUrl.pathname === '/') {
   //   return NextResponse.redirect(new URL('/user', req.url))
@@ -18,9 +19,9 @@ export async function middleware(req: NextRequest) {
   //   return NextResponse.redirect(new URL('/', req.url))
   // }
 
-  return res
+  return res;
 }
 
 export const config = {
   matcher: ['/api/user/:path*'],
-}
+};
