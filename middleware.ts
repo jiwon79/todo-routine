@@ -1,8 +1,9 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { withAuth } from 'next-auth/middleware';
 
-export async function middleware(req: NextRequest) {
+export default withAuth(async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
 
@@ -20,8 +21,8 @@ export async function middleware(req: NextRequest) {
   // }
 
   return res;
-}
+});
 
 export const config = {
-  matcher: ['/api/user/:path*'],
+  matcher: ['/api/user/:path*', '/:path*'],
 };
