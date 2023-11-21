@@ -1,4 +1,4 @@
-export interface Session {
+export interface AuthSession {
   user: {
     id: string;
     name: string;
