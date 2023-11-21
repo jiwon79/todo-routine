@@ -3,4 +3,5 @@ export interface AuthSession {
     id: string;
     name: string;
   };
+  expires: string;
 }
