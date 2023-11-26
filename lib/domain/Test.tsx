@@ -1,28 +1,17 @@
 'use client';
 
-import { signIn, signOut as authSignOut } from 'next-auth/react';
+import {
+  getSession,
+  signInWithKakao,
+  signOut,
+} from '@/lib/third-parties/supabase';
 
 export const Test = () => {
-  const kakaoSignIn = async () => {
-    console.log('kakao sign in');
-    const result = await signIn('kakao');
-    console.log(await result);
-  };
-
-  const signOut = async () => {
-    console.log('sign out');
-    const result = await authSignOut();
-    console.log(result);
-  };
-
   return (
     <>
-      <button onClick={() => kakaoSignIn()}>
-        <p>kakao login</p>
-      </button>
-      <button onClick={() => signOut()}>
-        <p>sign out</p>
-      </button>
+      <button onClick={signInWithKakao}>카카오 로그인</button>
+      <button onClick={signOut}>로그아웃</button>
+      <button onClick={getSession}>세션</button>
     </>
   );
 };
