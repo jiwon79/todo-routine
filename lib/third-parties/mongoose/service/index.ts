@@ -1,1 +1,1 @@
-export * from './connectService';
+export * from './MongooseService';

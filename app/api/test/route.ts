@@ -1,7 +1,7 @@
-import { ConnectService, UsersModel } from '@/lib/third-parties/mongoose';
+import { MongooseService, UsersModel } from '@/lib/third-parties/mongoose';
 
 export const GET = async () => {
-  await ConnectService.connect();
+  await MongooseService.connect();
   const query = UsersModel.find();
   const docs = await query;
 
