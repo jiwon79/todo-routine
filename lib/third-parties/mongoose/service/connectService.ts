@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-// const DB_URI = process.env.MONGODB_URI || "";
-const DB_URI = 'mongodb://root:example@localhost:27017/admin';
+const DB_URI = process.env.MONGODB_URI || '';
 
 export class ConnectService {
   static mongoose: mongoose.Mongoose;
