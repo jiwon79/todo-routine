@@ -15,6 +15,16 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <button
+        onClick={() =>
+          signIn('email-password', {
+            email: 'aㅁㅁㅁ',
+            password: 'a',
+          })
+        }
+      >
+        <p>Login</p>
+      </button>
       <button onClick={() => signIn('kakao')}>
         <p>KAKAO</p>
       </button>
