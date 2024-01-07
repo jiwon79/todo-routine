@@ -1,8 +1,8 @@
 import { MongooseService, UsersModel } from '@/lib/third-parties/mongoose';
-import { getServerSession } from '@/lib/domain/auth/next-auth';
+import { getServerSessionUser } from '@/lib/domain/auth/server';
 
 export const GET = async () => {
-  const session = await getServerSession();
+  const session = await getServerSessionUser();
   console.log('server session', session);
 
   await MongooseService.connect();
