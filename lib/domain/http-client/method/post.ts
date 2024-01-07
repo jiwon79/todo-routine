@@ -1,12 +1,12 @@
-export function post(
+export function post<T>(
   url: string,
-  body: BodyInit | undefined | null,
-): Promise<Response> {
+  body: Record<string, unknown>,
+): Promise<T> {
   return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body,
-  });
+    body: JSON.stringify(body),
+  }).then((res) => res.json());
 }
