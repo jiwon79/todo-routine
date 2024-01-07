@@ -3,7 +3,7 @@ import { SignInResponse } from '../interface';
 
 export const AuthApiClient = {
   async signInEmailPwd(email: string, password: string) {
-    return httpClient.post<SignInResponse>('/api/auth/signin/email-password', {
+    return httpClient.post<SignInResponse>('/api/user/signin/email-password', {
       email,
       password,
     });

@@ -1,13 +1,9 @@
 import { NextAuthOptions } from 'next-auth';
-// import KakaoProvider from 'next-auth/providers/kakao';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { AuthApiClient } from '@/lib/domain/auth/client/apiClient';
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    // KakaoProvider({
-    //   clientId: process.env.KAKAO_CLIENT_ID!,
-    //   clientSecret: process.env.KAKAO_CLIENT_SECRET!,
-    // }),
     CredentialsProvider({
       id: 'email-password',
       name: 'email-password',
@@ -15,16 +11,20 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'text', placeholder: 'email@gmail.com' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        console.log('authorize', credentials, req);
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' };
-        if (credentials && credentials.email !== 'a') {
-          throw new Error('NOT_CORRECT_EMAIL');
+      async authorize(credentials) {
+        if (!credentials) {
+          throw new Error('CREDENTIAL_NULL');
         }
-        if (credentials && credentials.password !== 'a') {
-          throw new Error('NOT_CORRECT_PASSWORD');
+
+        const response = await AuthApiClient.signInEmailPwd(
+          credentials.email,
+          credentials.password,
+        );
+        if (response.error) {
+          throw new Error(response.error);
         }
-        return user;
+
+        return response.user!;
       },
     }),
   ],

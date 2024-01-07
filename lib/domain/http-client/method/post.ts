@@ -2,7 +2,7 @@ export function post<T>(
   url: string,
   body: Record<string, unknown>,
 ): Promise<T> {
-  return fetch(url, {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL! + url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
