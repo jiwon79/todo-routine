@@ -1,3 +1,3 @@
-import { NextAuthHandler } from '@/lib/third-parties/next-auth/NextAuthHandler';
+import { NextAuthHandler } from '@/lib/domain/auth/next-auth';
 
 export { NextAuthHandler as GET, NextAuthHandler as POST };

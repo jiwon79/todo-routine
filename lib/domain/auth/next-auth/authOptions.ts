@@ -1,13 +1,13 @@
 import { NextAuthOptions } from 'next-auth';
-import KakaoProvider from 'next-auth/providers/kakao';
+// import KakaoProvider from 'next-auth/providers/kakao';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    KakaoProvider({
-      clientId: process.env.KAKAO_CLIENT_ID!,
-      clientSecret: process.env.KAKAO_CLIENT_SECRET!,
-    }),
+    // KakaoProvider({
+    //   clientId: process.env.KAKAO_CLIENT_ID!,
+    //   clientSecret: process.env.KAKAO_CLIENT_SECRET!,
+    // }),
     CredentialsProvider({
       id: 'email-password',
       name: 'email-password',
