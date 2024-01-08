@@ -8,8 +8,9 @@ export default function SignInPage() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(searchParams.get('email') ?? '');
+  const [password, setPassword] = useState(searchParams.get('password') ?? '');
+
   const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
@@ -17,11 +18,17 @@ export default function SignInPage() {
     setPassword(event.target.value);
   };
 
-  const signInEmailPwd = () => signIn('email-password', { email, password });
+  const signInEmailPwd = () =>
+    signIn('email-password', {
+      email,
+      password,
+      callbackUrl: '/',
+    });
 
   return (
     <div>
-      {error && <p>{error}</p>}
+      <p>sign in</p>
+      <p>{error}</p>
       <input type="text" value={email} onChange={onEmailChange} />
       <input type="password" value={password} onChange={onPasswordChange} />
       <button onClick={() => signInEmailPwd()}>sign in</button>

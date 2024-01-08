@@ -21,7 +21,9 @@ export const authOptions: NextAuthOptions = {
           credentials.password,
         );
         if (response.error) {
-          throw new Error(response.error);
+          throw new Error(
+            `${response.error}&email=${credentials.email}&password=${credentials.password}`,
+          );
         }
 
         return response.user!;
