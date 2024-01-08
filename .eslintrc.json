@@ -55,10 +55,11 @@
     ],
     "no-restricted-exports": "off",
     "no-useless-catch": "off",
-    "class-methods-use-this": "off",
     "no-plusplus": "off",
     "no-await-in-loop": "off",
     "no-restricted-syntax": "off",
-    "no-continue": "off"
+    "no-continue": "off",
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off"
   }
 }

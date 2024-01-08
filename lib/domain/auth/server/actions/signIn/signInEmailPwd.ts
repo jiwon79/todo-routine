@@ -1,4 +1,5 @@
 import { SignInEmailPwdBody } from '@/lib/domain/auth/interface';
+import { MongooseService, UserModel } from '@/lib/third-parties/mongoose';
 
 interface SignInEmailPwdRequest extends Request {
   json: () => Promise<SignInEmailPwdBody>;
@@ -6,17 +7,14 @@ interface SignInEmailPwdRequest extends Request {
 
 export async function signInEmailPwd(req: SignInEmailPwdRequest) {
   const { email, password } = await req.json();
-  if (email !== 'a') {
+  await MongooseService.connect();
+  const users = await UserModel.find({ email, password });
+  if (users.length === 0) {
     return new Response(JSON.stringify({ error: 'NOT_CORRECT_EMAIL' }), {
       status: 400,
     });
   }
 
-  if (password !== 'a') {
-    return new Response(JSON.stringify({ error: 'NOT_CORRECT_PASSWORD' }), {
-      status: 400,
-    });
-  }
-
-  return new Response(JSON.stringify({ user: { id: '1' } }));
+  const user = users[0]!;
+  return new Response(JSON.stringify({ user }));
 }
