@@ -16,5 +16,11 @@ export async function signInEmailPwd(req: SignInEmailPwdRequest) {
   }
 
   const user = users[0]!;
-  return new Response(JSON.stringify({ user }));
+  return Response.json({
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+  });
 }

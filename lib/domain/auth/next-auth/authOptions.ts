@@ -26,14 +26,27 @@ export const authOptions: NextAuthOptions = {
           );
         }
 
-        return response.user!;
+        const user = response.user!;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
       },
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
-      console.log('signIn', user, account, profile);
-      return true;
+    async jwt({ token, user }) {
+      if (user) {
+        // eslint-disable-next-line no-param-reassign
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // eslint-disable-next-line no-param-reassign
+      session.user.id = token.id;
+      return session;
     },
   },
   pages: {
