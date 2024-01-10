@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: '/auth/signin',
-    error: '/auth/signin',
+    signIn: '/auth/sign-in',
+    error: '/auth/sign-in',
   },
 };
