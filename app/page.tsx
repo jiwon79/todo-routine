@@ -1,35 +1,18 @@
 'use client';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function Home() {
   const session = useSession();
-  console.log('client session', session);
-
-  const fetchTest = async () => {
-    const res = await fetch('/api/test');
-    const data = await res.json();
-    console.log('data', data);
-  };
+  console.log('Home Session :', session);
 
   return (
     <main className={styles.main}>
-      <button
-        onClick={() =>
-          signIn('email-password', {
-            email: 'aㅁㅁㅁ',
-            password: 'a',
-          })
-        }
-      >
-        <p>Login</p>
-      </button>
-      <button onClick={() => signIn('kakao')}>
-        <p>KAKAO</p>
-      </button>
+      <Link href="/auth/sign-in">Sign In</Link>
+      <Link href="/auth/sign-up">Sign Up</Link>
       <button onClick={() => signOut()}>sign out</button>
-      <button onClick={() => fetchTest()}>fetch test</button>
     </main>
   );
 }
