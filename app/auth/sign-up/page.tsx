@@ -20,6 +20,7 @@ const SignUpPage = () => {
     password: '',
     repeatPassword: '',
   });
+  const [error, setError] = useState<string | null>(null);
 
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, name: event.target.value });
@@ -40,7 +41,15 @@ const SignUpPage = () => {
   };
 
   const signUp = async () => {
-    await AuthApiClient.signUpEmailPwd(form.name, form.email, form.password);
+    const response = await AuthApiClient.signUpEmailPwd(
+      form.name,
+      form.email,
+      form.password,
+    );
+    if (response.error) {
+      setError(response.error);
+      return;
+    }
     await router.push(`/auth/sign-in?email=${form.email}`);
   };
 
@@ -64,6 +73,7 @@ const SignUpPage = () => {
           value={form.email}
           onChange={onEmailChange}
         />
+        {error && <p>{error}</p>}
       </label>
       <label htmlFor="password">
         <p>password</p>

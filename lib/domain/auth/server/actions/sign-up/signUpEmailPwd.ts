@@ -8,6 +8,11 @@ interface SignInEmailPwdRequest extends Request {
 export async function signUpEmailPwd(req: SignInEmailPwdRequest) {
   const { name, email, password } = await req.json();
   await MongooseService.connect();
+  const existUsers = await UserModel.find({ email });
+  if (existUsers.length > 0) {
+    return Response.json({ error: 'EMAIL_ALREADY_EXIST' }, { status: 400 });
+  }
+
   const newUser = new UserModel({
     name,
     email,
