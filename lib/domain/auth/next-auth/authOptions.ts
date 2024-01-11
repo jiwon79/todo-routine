@@ -34,6 +34,24 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
+    CredentialsProvider({
+      id: 'guest',
+      name: 'guest',
+      credentials: {
+        guestID: { label: 'guest id' },
+      },
+      async authorize(credentials) {
+        const guestID = credentials?.guestID;
+
+        const response = await AuthApiClient.signInGuest(guestID);
+        const user = response.user!;
+
+        return {
+          id: user.id,
+          name: user.name,
+        };
+      },
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {

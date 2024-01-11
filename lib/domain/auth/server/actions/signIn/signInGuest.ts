@@ -1,36 +1,29 @@
-import { randomUUID } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
-import { SignInGuestBody } from '../../../interface';
+import { SignInGuestBody, SignInResponse } from '../../../interface';
 import { MongooseService, UserModel } from '@/lib/third-parties/mongoose';
 
 interface SignInGuestRequest extends NextRequest {
   json: () => Promise<SignInGuestBody>;
 }
 
-export async function signInGuest(request: SignInGuestRequest) {
+export async function signInGuest(
+  request: SignInGuestRequest,
+): Promise<NextResponse<SignInResponse>> {
   const { guestID } = await request.json();
   await MongooseService.connect();
 
-  if (guestID !== undefined) {
-    const users = await UserModel.find({ guest_id: guestID });
-    if (users.length > 0) {
-      const user = users[0]!;
-      return NextResponse.json({
-        id: user._id,
-        name: user.name,
-      });
-    }
+  const users = await UserModel.find({ guest_id: guestID });
+  if (users.length === 0) {
+    return NextResponse.json({
+      error: 'NOT_EXIST_USER',
+    });
   }
 
-  const newGuestID = randomUUID();
-  const newGuestName = `guest-${newGuestID.slice(0, 8)}`;
-  const newGuestUser = new UserModel({
-    name: newGuestName,
-    guest_id: newGuestID,
-  });
-  await newGuestUser.save();
+  const user = users.at(0)!;
   return NextResponse.json({
-    id: newGuestUser._id,
-    name: newGuestUser.name,
+    user: {
+      id: user._id.toString(),
+      name: user.name!,
+    },
   });
 }

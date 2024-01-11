@@ -2,11 +2,12 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { useSignIn } from '@/lib/domain/auth/client';
 
 export default function SignInPage() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
+  const { signInEmailPwd, signInGuest } = useSignIn();
 
   const [email, setEmail] = useState(searchParams.get('email') ?? '');
   const [password, setPassword] = useState(searchParams.get('password') ?? '');
@@ -18,20 +19,14 @@ export default function SignInPage() {
     setPassword(event.target.value);
   };
 
-  const signInEmailPwd = () =>
-    signIn('email-password', {
-      email,
-      password,
-      callbackUrl: '/',
-    });
-
   return (
     <div>
       <p>sign in</p>
       <p>{error}</p>
       <input type="text" value={email} onChange={onEmailChange} />
       <input type="password" value={password} onChange={onPasswordChange} />
-      <button onClick={() => signInEmailPwd()}>sign in</button>
+      <button onClick={() => signInEmailPwd(email, password)}>sign in</button>
+      <button onClick={() => signInGuest()}>guest login</button>
     </div>
   );
 }

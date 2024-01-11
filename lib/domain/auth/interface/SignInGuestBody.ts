@@ -1,3 +1,3 @@
 export interface SignInGuestBody {
-  guestID?: string;
+  guestID: string;
 }

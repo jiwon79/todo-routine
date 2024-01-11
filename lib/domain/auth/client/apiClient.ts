@@ -15,4 +15,14 @@ export const AuthApiClient = {
       password,
     });
   },
+  async signInGuest(guestID: string | undefined) {
+    return httpClient.post<SignInResponse>('/api/user/sign-in/guest', {
+      guestID,
+    });
+  },
+  async signUpGuest(guestID: string) {
+    return httpClient.post<SignInResponse>('/api/user/sign-up/guest', {
+      guestID,
+    });
+  },
 };
