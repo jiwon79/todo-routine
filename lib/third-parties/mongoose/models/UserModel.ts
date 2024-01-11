@@ -3,7 +3,7 @@ import { ModelReturn } from '../interface';
 
 export const UserSchema = new Schema(
   {
-    anonymous_id: String,
+    guest_id: String,
     name: String,
     email: String,
     password: String,
