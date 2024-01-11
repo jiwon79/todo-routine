@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SignInGuestBody, SignInResponse } from '../../../interface';
 import { MongooseService, UserModel } from '@/lib/third-parties/mongoose';
+import { SignInGuestBody, SignInResponse } from '../../../interface';
 
 interface SignInGuestRequest extends NextRequest {
   json: () => Promise<SignInGuestBody>;
